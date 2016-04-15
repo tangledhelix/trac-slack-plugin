@@ -46,13 +46,19 @@ class SlackNotifcationPlugin(Component):
         if values['attrib']:
             attachments.append({
                 'title': 'Attributes',
-                'text': values['attrib']
+                'text': values['attrib'],
+                'mrkdwn_in': [
+                    'text'
+                ]
             })
 
         if values.get('changes', False):
             attachments.append({
                 'title': ':small_red_triangle: Changes',
-                'text': values['changes']
+                'text': values['changes'],
+                'mrkdwn_in': [
+                    'text'
+                ]
             })
 
         # For comment and description, switch the {{{, }}} markers for ```
