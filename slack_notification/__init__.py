@@ -55,20 +55,25 @@ class SlackNotifcationPlugin(Component):
                 'text': values['changes']
             })
 
-        # For comment and description, strip the {{{, }}} markers. They add nothing
-        # of value in Slack, and replacing them with ` or ``` doesn't help as these
-        # end up being formatted as blockquotes anyway.
+        # For comment and description, switch the {{{, }}} markers for ```
+        # code block markers.
 
         if values['description']:
             attachments.append({
                 'title': 'Description',
-                'text': re.sub(r'({{{|}}})', '', values['description'])
+                'text': re.sub(r'({{{|}}})', '```', values['description']),
+                'mrkdwn_in': [
+                    'text'
+                ]
             })
 
         if values['comment']:
             attachments.append({
                 'title': 'Comment:',
-                'text': re.sub(r'({{{|}}})', '', values['comment'])
+                'text': re.sub(r'({{{|}}})', '```', values['comment']),
+                'mrkdwn_in': [
+                    'text'
+                ]
             })
 
         message = template % values
